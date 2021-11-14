@@ -42,7 +42,7 @@ export default {
             required: true
         },
         year: {
-            type: Number,
+            type: String,
             required: true
         }
     },
@@ -55,7 +55,7 @@ export default {
         const author = props.author
         const year = props.year
 
-        const text = computed(() => `${author} (${year})`)
+        const text = computed(() => `${author} (${new Date(year).getFullYear()})`)
 
         return {
             link,

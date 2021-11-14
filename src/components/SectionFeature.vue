@@ -6,11 +6,11 @@
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 px-4 mt-4">
             <div v-for="book in books" :key="book.id">
                 <CardBook
-                    :link="book.link"
+                    :link="book.slug"
                     :image="book.image"
-                    :alt-text="book.alt"
+                    :alt-text="book.title"
                     :title="book.title"
-                    :year="book.year"
+                    :year="book.publication_date"
                     :author="book.author"
                 />
             </div>
@@ -19,29 +19,22 @@
 </template>
 
 <script>
+import { onMounted, ref } from 'vue'
+import { Books } from '@/api/books'
 import CardBook from '@/components/CardBook.vue'
+
 export default {
-    props: {
-        title: {
-            type: String,
-            default: ''
-        },
-        titleSub: {
-            type: String,
-            default: ''
-        },
-        books: {
-            type: Array,
-            required: true
-        }
-    },
     components: {
         CardBook
     },
-    setup(props) {
-        const title = props.title
-        const titleSub = props.titleSub
-        const books = props.books
+    async setup() {
+        const title = 'Some of our random reads'
+        const titleSub = 'Toshokan Bilblioteca\'s randomly picked books to fill your read'
+        const books = await Books.random(6).then(response => {
+            return response.data
+        }).catch((e) => {
+            // do soemthing with error
+        })
 
         return {
             title,
