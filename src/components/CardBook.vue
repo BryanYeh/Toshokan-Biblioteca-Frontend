@@ -1,6 +1,6 @@
 <template>
     <div class="group">
-        <BaseLink :to="link">
+        <BaseLink :to="{ name: 'Book', params: { slug: link } }">
             <img
                 class="rounded-md mb-4 transform group-hover:-translate-y-1 group-hover:shadow-lg duration-150"
                 :src="image"
